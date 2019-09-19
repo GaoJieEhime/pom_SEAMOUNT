@@ -15,11 +15,11 @@ C
       integer mend,mdir
       character dir*80
 
-      H0=2000.e0
+      H0=4500.e0
 C
 C     Set delh > 1.0 for an island or delh < 1.0 for a seamount:
 C
-      delh=0.e0
+      delh=0.8e0
 C
 C     Grid size:
 C
@@ -27,7 +27,7 @@ C
 C
 C     Radius island or seamount:
 C
-      ra=25000.e0
+      ra=40000.e0
 C
 C     Current velocity:
 C
@@ -197,18 +197,18 @@ C
       do i=1,im
         do j=1,jm
 C
-          h(i,j)=H0*(1.e0-delh)
-c     $                          *exp(-((east_c(i,j)
-c     $                                   -east_c((im+1)/2,j))**2
-c     $                                +(north_c(i,j)
-c     $                                   -north_c(i,(jm+1)/2))**2)
-c     $                                /ra**2))
+          h(i,j)=H0*(1.e0-delh
+     $                          *exp(-((east_c(i,j)
+     $                                   -east_c((im+1)/2,j))**2
+     $                                +(north_c(i,j)
+     $                                   -north_c(i,(jm+1)/2))**2)
+     $                                /ra**2))
           if(h(i,j).lt.1.e0) h(i,j)=1.e0
 C
         end do
       end do
-      write(6,*)h(1,1)
-      pause
+c      write(6,*)h(1,1)
+c      pause
 C
 C     Close the north and south boundaries to form a channel:
 C
@@ -227,6 +227,7 @@ c     1        form='unformatted')
 
             write(70)h,mend
          close(70)
+c         stop
       call areas_masks
 C
 C     Adjust bottom topography so that cell to cell variations
@@ -310,6 +311,7 @@ C
       rfn=1.e0
       rfs=1.e0
 C
+      
       do j=2,jmm1
         uabw(j)=uab(2,j)
         uabe(j)=uab(imm1,j)
@@ -327,26 +329,42 @@ C
         ele(j)=(ele(j)-elejmid)*fsm(im,j)
         elw(j)=(elw(j)-elwjmid)*fsm(2,j)
       end do
+
+      write(6,*)'2-d boundary condition in EAST AND WEST '
+      write(6,*)'J -- ELE -- ELW -- UABE -- UABW'
+      do j=2,jmm1
+         write(6,*)j,ele(j),elw(j),uabe(j),uabw(j)
+      end do
+
+
 c
 c     the 2-d boundary condition of v  
 cc     in South and North boundary        
        do i=2,imm1
          vabs(i)=vab(i,2)
          vabn(i)=vab(i,jmm1)
-         eln(i)=eln(i-1)-cor(i,jmm1)*vab(i,jmm1)/grav*dx(i-1,jmm1)
-         els(i)=els(i-1)-cor(i,   2)*vab(i,   2)/grav*dx(i-1,   2)
+c         eln(i)=eln(i-1)-cor(i,jmm1)*vab(i,jmm1)/grav*dx(i-1,jmm1)
+c         els(i)=els(i-1)-cor(i,   2)*vab(i,   2)/grav*dx(i-1,   2)
       end do
 C
 C     Adjust boundary elevations so that they are zero in the middle
 C     of the channel:
 C
-      elsimid=els(imm1/2)
-      elnimid=eln(imm1/2)
+c      elsimid=els(imm1/2)
+c      elnimid=eln(imm1/2)
       do i=2,imm1
-        eln(i)=(eln(i)-elnimid)*fsm(i,jm)
-        els(j)=(els(j)-elsimid)*fsm(i, 2)
+c        eln(i)=(eln(i)-elnimid)*fsm(i,jm)
+c        els(i)=(els(i)-elsimid)*fsm(i, 2)
+         eln(i)=elw(jmm1)
+         els(i)=elw(2)
       end do
 c
+         write(6,*)'2-d boundary condition in NORTH and SOUTH '
+         write(6,*)'I -- ELS -- ELN -- VABS -- VABN'
+
+       do i=2,imm1
+         write(6,*)i,els(i),eln(i),vabs(i),vabn(i)
+      end do
 
 
 C
@@ -363,6 +381,9 @@ C
           tbw(j,k)=tb(1,j,k)
           sbe(j,k)=sb(im,j,k)
           sbw(j,k)=sb(1,j,k)
+c
+          ube(j,k)=ub(im,j,k)
+          ubw(j,k)=ub(2,j,k)  
         end do
 C
         do i=1,im
@@ -370,10 +391,14 @@ C
           tbs(i,k)=tb(i,1,k)
           sbn(i,k)=sb(i,jm,k)
           sbs(i,k)=sb(i,1,k)
+c 
+          vbn(i,k)=vb(i,jm,k)
+          vbs(i,k)=vb(i,2,k)
         end do
 C
       end do
 C
+c      stop
       return
 C
       end

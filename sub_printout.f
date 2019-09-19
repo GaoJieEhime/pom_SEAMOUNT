@@ -4,6 +4,7 @@ C
       include 'pom2k.c'
 C-----------------------------------------
       integer mend,mdir,iday, ihour, imin
+      integer i,j,k
       character dir*80, day*3, hour*3, mint*3
       character dir2*120
 c----------------------------------------
@@ -48,14 +49,15 @@ c
 c
          open(73,file=dir(1:mdir)//'/EtUaVa_'//day//hour//mint,
      1        form='unformatted',STATUS='NEW')
-          write(73)et,ua,va,mend
+          write(73)ua,va,et,mend
          close(73)
 c
          open(74,file=dir(1:mdir)//'/AamKhKm_'//day//hour//mint,
      1        form='unformatted',STATUS='NEW')
           write(74)aam,kh,km,mend
          close(74)
-c
+
+c          write(6,*)'aam',aam(1,1,1)
 c         write(70)u,v,t,s,et,ua,va,kh,km,aam,mend
 c
 c         open(70,file=dir(1:mdir)//'/u/U_'//day//hour//min,
