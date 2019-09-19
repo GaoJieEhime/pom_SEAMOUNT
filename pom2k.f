@@ -789,11 +789,11 @@ c
       if(iproblem.ne.3) then     ! constant wind read in file2ic
 c
 c           wusurf(i,j)=ramp*(1.e-4*cos(pi*(j-1)/jmm1))
-            wusurf(i,j)=1.00*(1.e-4*cos(pi*(j-1)/jmm1))
-     $                    *.25e0*(dvm(i,j+1)+dvm(i-1,j+1)
-     $                          +dvm(i-1,j)+dvm(i,j))
+c            wusurf(i,j)=1.00*(1.e-4*cos(pi*(j-1)/jmm1))
+c     $                    *.25e0*(dvm(i,j+1)+dvm(i-1,j+1)
+c     $                          +dvm(i-1,j)+dvm(i,j))
 C --- no wind ----
-c           wusurf(i,j)=0.e0
+            wusurf(i,j)=0.e0
             wvsurf(i,j)=0.e0
        endif
             e_atmos(i,j)=0.e0
