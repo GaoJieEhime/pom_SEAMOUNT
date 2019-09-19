@@ -1,0 +1,10 @@
+      iproblem=  1                                
+      dte=      3               
+      isplit=   10                
+      mode=       3                 
+      days=      10.0                
+      prtd1=     0.0417            
+      horcon=    0.1                
+      aam_init=  50.e0              
+      kl1=       12                  
+      kl2=       kb-12              
