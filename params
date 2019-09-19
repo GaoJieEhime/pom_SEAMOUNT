@@ -1,10 +1,23 @@
-      iproblem=  1                                
-      dte=      3               
-      isplit=   10                
-      mode=       3                 
-      days=      10.0                
-      prtd1=     0.0417            
-      horcon=    0.1                
+      iproblem=  1 
+      mode=      3	  
+      dte=       12
+      isplit=    10                         
+      days=      20.0                
+      prtd1=     1.e0    ! First stage  print interval (days)
+      prtd2=     1.e0    ! Second stage print interval (days)
+      swtch=     100.e0  ! Time to switch from prtd1 to prtd2(days) 
+      iskp=4             ! Printout skip interval in i 
+      jskp=3             ! Printout skip interval in j
+
+      rhoref=1025.e0     ! Reference density ,1025 for seawater,
+      tbias=0.e0         ! Temperature bias (deg. C)
+      sbias=0.e0         ! Salinity bias
+      grav=9.806e0       ! gravity constant (S.I. units)
+      kappa=0.4e0        ! von Karman's constant
+      z0b=.01e0          ! Bottom roughness (metres)
+      cbcmin=.0025e0     ! Minimum bottom friction coeff.
+      cbcmax=1.e0        ! Maximum bottom friction coeff.
+      horcon=0.2e0       ! Smagorinsky diffusivity coeff.        	  
       aam_init=  50.e0              
-      kl1=       12                  
-      kl2=       kb-12              
+	  
+    
